@@ -8,14 +8,31 @@ const initialTodos = [
 ];
 
 function TodosList() {
-  const [todos,setTodos ] = useState(initialTodos)
+  const [todos,setTodos] = useState(initialTodos);
+  function deleteHandler(id){
+    if(confirm('Are you sure that want to delete the to-do?')){
+      setTodos(todos.filter(todo=>todo.id !== id));    
+    }
+  }
+  function toggleIsDoneHandler(id){
+    setTodos(todos.map(todo =>{
+      if(todo.id === id){
+        todo.isDone = !todo.isDone;
+        return todo;
+      }else{
+        return todo;
+      }
+    }));          
+  }
   return (
     <>
         <div className="todos">
            {todos.map(todo =>
             <Todo
-              todo={todo}
-              key={todo.id}
+            deleteTodo = {(id)=>deleteHandler(id)}
+            toggleIsDone={(id)=>toggleIsDoneHandler(id)}
+            todo={todo}
+            key={todo.id}
             />
           )}            
         </div>
